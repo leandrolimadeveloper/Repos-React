@@ -103,6 +103,8 @@ export default function Main() {
                 </SubmitButton>
             </Form>
 
+            <p style={{color: 'red;', fontSize: '10px;', marginTop: '2px;'}}>Exemplo: facebook/react (empresa/nome-do-repositório)</p>
+
             <List>
                 {repositories.map(repo => (
                     <li key={repo.name}>
