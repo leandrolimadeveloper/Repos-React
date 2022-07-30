@@ -46,6 +46,23 @@ export const Owner = styled.header`
     }
 `;
 
+export const FilterList = styled.div`
+    margin: 15px 0;
+
+    button {
+        outline: 0;
+        border: 0;
+        border-radius: 4px;
+        padding: 8px;
+        margin: 0 4px;
+
+        &:nth-child(${props => props.active + 1}) {
+            background: #0071DB;
+            color: #FFF;
+        }
+    }
+`;
+
 export const BackButton = styled(Link)`
     border: 0;
     outline: 0;
