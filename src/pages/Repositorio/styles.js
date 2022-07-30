@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom'
 
 export const Loading = styled.div`
-    // color: #FFF;    
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // height: 100vh;
+    color: #FFF;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 `;
 
 export const Container = styled.div`
@@ -79,7 +79,7 @@ export const IssuesList = styled.ul`
 
             p {
                 margin-top: 2px;
-                font-size: 10px;
+                font-size: 12px;
                 color: #000;
             }
 
@@ -109,3 +109,24 @@ export const IssuesList = styled.ul`
         }
     }
 `;
+
+export const PageAction = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+        outline: 0;
+        border: 0;
+        background: #222;
+        color: #FFF;
+        padding: 5px 10px;
+        border-radius: 4px;
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+    }
+`;
+

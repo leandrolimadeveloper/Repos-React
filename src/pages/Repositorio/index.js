@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Owner, Loading, BackButton, IssuesList } from './styles';
+import { Container, Owner, Loading, BackButton, IssuesList, PageAction } from './styles';
 import api from '../../services/api';
 import { FaArrowLeft } from 'react-icons/fa'
 
@@ -8,15 +8,16 @@ export default function Repositorio({ match }) {
   const [repositorio, setRepositorio] = useState({});
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
 
     async function load() {
-      const nomeRepo = decodeURIComponent(match.params.repositorio);
+      const nameRepo = decodeURIComponent(match.params.repositorio);
 
       const [repositorioData, issuesData] = await Promise.all([
-        api.get(`/repos/${nomeRepo}`),
-        api.get(`/repos/${nomeRepo}/issues`, {
+        api.get(`/repos/${nameRepo}`),
+        api.get(`/repos/${nameRepo}/issues`, {
           params: {
             state: 'open',
             per_page: 5
@@ -24,12 +25,8 @@ export default function Repositorio({ match }) {
         })
       ]);
 
-      console.log(repositorioData)
-      console.log(issuesData)
-
       setRepositorio(repositorioData.data);
       setIssues(issuesData.data);
-      console.log(issuesData.data)
 
       setLoading(false);
 
@@ -38,6 +35,29 @@ export default function Repositorio({ match }) {
     load();
 
   }, [match.params.repositorio]);
+
+  useEffect(() => {
+    async function loadIssue() {
+      const nameRepo = decodeURIComponent(match.params.repositorio)
+
+      const response = await api.get(`/repos/${nameRepo}/issues`, {
+        params: {
+          state: 'open',
+          page,
+          per_page: 5
+        }
+      })
+
+      setIssues(response.data)
+
+    }
+
+    loadIssue()
+  }, [match.params.repositorio, page])
+
+  async function handlePage(action) {
+    setPage(action === 'previous' ? page - 1 : page + 1)
+  }
 
   if (loading) {
     return (
@@ -78,6 +98,11 @@ export default function Repositorio({ match }) {
           </li>
         ))}
       </IssuesList>
+
+      <PageAction>
+        <button type='button' onClick={() => handlePage('previous')} disabled={page < 2}>Voltar</button>
+        <button type='button' onClick={() => handlePage('next')}>Avançar</button>
+      </PageAction>
 
     </Container>
   )
