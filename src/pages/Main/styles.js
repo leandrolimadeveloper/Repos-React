@@ -19,6 +19,12 @@ export const Container = styled.div`
         }
     }
 
+    p {
+        margin-top: 6px;
+        color: blue;
+        font-size: 10px;
+    }
+
 `
 
 export const Form = styled.form`
